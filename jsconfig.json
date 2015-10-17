@@ -1,0 +1,25 @@
+{
+    "files": [
+        "web/src/stats.js/stats.min.js",
+        "web/src/pixi.js/pixi.min.js",
+        "web/src/entitas/entitas.min.js",
+        "web/src/speedracer/generated.js",
+        "web/src/speedracer/extensions.js",
+        "web/src/speedracer/core/Constants.js",
+        "web/src/speedracer/systems/AccelerateSystem.js",
+        "web/src/speedracer/systems/DestroySystem.js",
+        "web/src/speedracer/systems/InputSystem.js",
+        "web/src/speedracer/systems/MoveSystem.js",
+        "web/src/speedracer/systems/ReachedFinishSystem.js",
+        "web/src/speedracer/systems/RenderPositionSystem.js",
+        "web/src/speedracer/systems/AddViewSystem.js",
+        "web/src/speedracer/systems/RemoveViewSystem.js",
+        "web/src/speedracer/systems/CreateFinishLineSystem.js",
+        "web/src/speedracer/systems/CreateOpponentsSystem.js",
+        "web/src/speedracer/systems/CreatePlayerSystem.js",
+        "web/src/speedracer/core/GameController.js",
+        "web/src/speedracer/core/Game.js",
+        "web/main.js"
+    ]
+
+}

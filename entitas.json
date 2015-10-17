@@ -1,0 +1,47 @@
+{
+  "namespace": "example",
+  "src": "lib/src",
+  "output": {
+    "javascript": "web/src/speedracer/extensions.js",
+    "typescript": "lib/src/generated.ts",
+    "declaration": "lib/ext/generated.d.ts"
+  },
+  "components": {
+    "Acceleratable": false,
+    "Accelerating": false,
+    "Destroy": false,
+    "Move": [
+      "speed:number",
+      "maxSpeed:number"
+    ],
+    "Position": [
+      "x:number",
+      "y:number",
+      "z:number"
+    ],
+    "FinishLine": false,
+    "Resource": [
+      "name:string"
+    ],
+    "View": [
+      "sprite:Object"
+    ]
+  },
+  "systems": {
+    "AccelerateSystem": true,
+    "DestroySystem": true,
+    "InputSystem": true,
+    "MoveSystem": true,
+    "ReachedFinishSystem": true,
+    "RenderPositionSystem": true,
+    "AddViewSystem": true,
+    "RemoveViewSystem": true,
+    "CreatePlayerSystem": true,
+    "CreateOpponentsSystem": true,
+    "CreateFinishLineSystem": true
+  },
+  "entities": {
+    "Accelerating": true,
+    "FinishLine": true
+  }
+}

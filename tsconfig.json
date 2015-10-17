@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": false,
+    "preserveConstEnums": false,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "outDir": "web/src/speedracer"
+  },
+  "files": [
+    "lib/ext/pixi.js.d.ts",
+    "lib/ext/generated.d.ts",
+    "lib/src/generated.ts",
+    "lib/src/systems/AccelerateSystem.ts",
+    "lib/src/systems/AddViewSystem.ts",
+    "lib/src/systems/CreateFinishLineSystem.ts",
+    "lib/src/systems/CreateOpponentsSystem.ts",
+    "lib/src/systems/CreatePlayerSystem.ts",
+    "lib/src/systems/DestroySystem.ts",
+    "lib/src/systems/InputSystem.ts",
+    "lib/src/systems/MoveSystem.ts",
+    "lib/src/systems/ReachedFinishSystem.ts",
+    "lib/src/systems/RemoveViewSystem.ts",
+    "lib/src/systems/RenderPositionSystem.ts",
+    "lib/src/core/Constants.ts",
+    "lib/src/core/GameController.ts",
+    "lib/src/core/Game.ts"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "speedracer",
+  "version": "0.0.1",
+  "authors": [
+    "darkoverlordofdata@gmail.com"
+  ],
+  "description": "Entitas TS Example",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "tmp",
+    "build",
+    "node_modules",
+    "packages",
+    "src",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "closure-compiler": "0.2.7",
+    "google-closure-library": "*"
+  },
+  "dependencies": {
+    "entitas": "git://github.com/darkoverlordofdata/entitas-ts",
+    "pixi.js": "~3.0.8",
+    "stats.js": "*"
+  },
+  "install": {
+    "ignore": [
+      "closure-compiler",
+      "google-closure-library"
+    ],
+    "path": "web/src",
+    "sources": {
+      "entitas": "packages/entitas/build/entitas.min.js",
+      "stats.js": "packages/stats.js/build/stats.min.js",
+      "pixi.js": "packages/pixi.js/bin/pixi.min.js"
+    }
+  }
+}
