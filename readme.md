@@ -2,7 +2,7 @@
 
 A recreation of the example at https://github.com/sschmid/Entitas-CSharp-Example
 
-created using entitas-ts cli:
+created using entitas-ts cli st the starting point:
 
     git clone https://github.com/darkoverlordofdata/template example
     cd example
