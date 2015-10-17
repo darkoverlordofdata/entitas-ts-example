@@ -16,7 +16,11 @@ module example {
     public get trigger():TriggerOnEvent {
       return CoreMatcher.Position.onEntityAdded();
     }
-    
+
+    /**
+     * Check if anyone crossed the finish line
+     * @param entities
+     */
     public execute(entities:Array<Entity>) {
       var finishLinePosY = this.pool.finishLineEntity.position.y*50;
       for (var i=0, l=entities.length; i<l; i++) {

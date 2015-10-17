@@ -13,6 +13,9 @@ module example {
   export class CreatePlayerSystem implements IInitializeSystem, ISetPool {
     protected pool:Pool;
 
+    /**
+     * Create the Player
+     */
     public initialize() {
       this.pool.createEntity()
         .addResource("Player")

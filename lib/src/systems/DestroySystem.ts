@@ -16,7 +16,11 @@ module example {
     public get trigger():TriggerOnEvent {
       return CoreMatcher.Destroy.onEntityAdded();
     }
-    
+
+    /**
+     * Execute when a Destroy component is added
+     * @param entities
+     */
     public execute(entities:Array<Entity>) {
       for (var i=0, l=entities.length; i<l; i++) {
         this.pool.destroyEntity(entities[i]);

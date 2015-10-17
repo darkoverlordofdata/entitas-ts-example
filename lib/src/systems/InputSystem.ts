@@ -15,6 +15,9 @@ module example {
     protected pool:Pool;
     protected mouseDown:boolean=false;
 
+    /**
+     * Mouse Polling
+     */
     public execute() {
       this.pool.isAccelerating = this.mouseDown;
     }

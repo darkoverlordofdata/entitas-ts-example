@@ -2,9 +2,9 @@
   "namespace": "example",
   "src": "lib/src",
   "output": {
-    "javascript": "web/src/speedracer/extensions.js",
-    "typescript": "lib/src/generated.ts",
-    "declaration": "lib/ext/generated.d.ts"
+    "javascript": "web/src/speedracer/generatedExtensions.js",
+    "typescript": "lib/src/generatedComponents.ts",
+    "declaration": "lib/ext/entitas-example.d.ts"
   },
   "components": {
     "Acceleratable": false,

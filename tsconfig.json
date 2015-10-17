@@ -11,8 +11,8 @@
   },
   "files": [
     "lib/ext/pixi.js.d.ts",
-    "lib/ext/generated.d.ts",
-    "lib/src/generated.ts",
+    "lib/ext/entitas-example.d.ts",
+    "lib/src/generatedComponents.ts",
     "lib/src/systems/AccelerateSystem.ts",
     "lib/src/systems/AddViewSystem.ts",
     "lib/src/systems/CreateFinishLineSystem.ts",

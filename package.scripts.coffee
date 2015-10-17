@@ -22,7 +22,7 @@ BabelScript     = 4   # es6
 ClosureCompiler = 8   # plovr
 
 # paths:
-LIB_NAME        = "ash"
+LIB_NAME        = "speedracer"
 PLOVR           = "tools/plovr.jar"
 COMPILER_JAR    = "packages/closure-compiler/lib/vendor/compiler.jar"
 LIB_ASH         = "packages/ash.coffee/goog/lib"
@@ -132,7 +132,7 @@ module.exports = (project, options = {}) ->
         cat #{files} | \
           java -jar #{COMPILER_JAR} \
             --compilation_level #{options.compile} \
-            --js_output_file build/#{LIB_NAME}.min,js
+            --js_output_file build/#{LIB_NAME}.min.js
       """
         
     return step

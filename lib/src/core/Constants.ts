@@ -34,16 +34,29 @@ module example {
      */
     public static resources = {
 
-      'Finish Line': {
-        path: 'res/Finish Line.png',
-        scale: {
-          x: .04,
-          y: .6,
-          z: 1
+      'Finish Line': [
+        {
+          path: 'res/Square.png',
+          scale: {
+            x: 5,
+            y: .33,
+            z: 1
+          },
+          tint: 0xc0c0c0
+        },
+        {
+          path: 'res/Finish Line.png',
+          scale: {
+            x: .4*.33,
+            y: .6*.33,
+            z: 1
+          },
+          position: {
+            x: 500,
+            y: 0,
+          }
         }
-
-      },
-
+      ],
       'Opponent': {
         path: 'res/Opponent.png',
         scale: {
@@ -73,8 +86,6 @@ module example {
 
       }
     }
-
-
   }
 }
 

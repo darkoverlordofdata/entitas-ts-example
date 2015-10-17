@@ -24,7 +24,11 @@ module example {
         <TriggerOnEvent>(<Matcher>Matcher.allOf(CoreMatcher.Resource, CoreMatcher.Destroy)).onEntityAdded()
       ];
     }
-    
+
+    /**
+     * Execute when both Resource and Destroy are present
+     * @param entities
+     */
     public execute(entities:Array<Entity>) {
       for (var i = 0, l = entities.length; i < l; i++) {
         var e = entities[i];

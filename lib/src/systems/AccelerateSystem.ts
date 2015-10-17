@@ -11,13 +11,16 @@ module example {
   import ISetPool = entitas.ISetPool;
 
   export class AccelerateSystem implements IReactiveSystem, ISetPool {
+    protected group:Group;
 
     public get trigger():TriggerOnEvent {
       return CoreMatcher.Accelerating.onEntityAddedOrRemoved();
     }
 
-    protected group:Group;
-
+    /**
+     * Execute when acceleration is added or removed
+     * @param entities
+     */
     public execute(entities:Array<Entity>) {
       if (entities.length !== 1) {
         throw new Exception("Expected exactly one entity but found " + entities.length);

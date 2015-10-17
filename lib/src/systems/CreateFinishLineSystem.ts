@@ -11,14 +11,16 @@ module example {
   import ISetPool = entitas.ISetPool;
 
   export class CreateFinishLineSystem implements IInitializeSystem, ISetPool {
-
     protected pool:Pool;
 
+    /**
+     * Create the finish line
+     */
     public initialize() {
       this.pool.createEntity()
         .setFinishLine(true)
         .addResource("Finish Line")
-        .addPosition(9, 7, 0);
+        .addPosition(20, 500, 0);
     }
 
     public setPool(pool:Pool) {

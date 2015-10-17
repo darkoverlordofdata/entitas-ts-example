@@ -13,6 +13,9 @@ module example {
   export class MoveSystem implements IExecuteSystem, ISetPool {
     protected group:Group;
 
+    /**
+     * Execute motion each frame
+     */
     public execute() {
       var entities = this.group.getEntities();
       for (var i = 0, l = entities.length; i < l; i++) {

@@ -11,9 +11,11 @@ module example {
   import ISetPool = entitas.ISetPool;
 
   export class CreateOpponentsSystem implements IInitializeSystem, ISetPool {
-
     protected pool:Pool;
 
+    /**
+     * Create an Enemy
+     */
     public initialize() {
       const resourceName = "Opponent";
       for (var i = 1; i < 10; i++) {
