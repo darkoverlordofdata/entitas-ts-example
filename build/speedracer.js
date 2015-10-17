@@ -577,14 +577,29 @@ var example;
          * Prefab's
          */
         Constants.resources = {
-            'Finish Line': {
-                path: 'res/Finish Line.png',
-                scale: {
-                    x: .04,
-                    y: .6,
-                    z: 1
+            'Finish Line': [
+                {
+                    path: 'res/Square.png',
+                    scale: {
+                        x: 5,
+                        y: .33,
+                        z: 1
+                    },
+                    tint: 0xc0c0c0
+                },
+                {
+                    path: 'res/Finish Line.png',
+                    scale: {
+                        x: .4 * .33,
+                        y: .6 * .33,
+                        z: 1
+                    },
+                    position: {
+                        x: 500,
+                        y: 0
+                    }
                 }
-            },
+            ],
             'Opponent': {
                 path: 'res/Opponent.png',
                 scale: {
@@ -632,6 +647,10 @@ var example;
             enumerable: true,
             configurable: true
         });
+        /**
+         * Execute when acceleration is added or removed
+         * @param entities
+         */
         AccelerateSystem.prototype.execute = function (entities) {
             if (entities.length !== 1) {
                 throw new Exception("Expected exactly one entity but found " + entities.length);
@@ -666,6 +685,10 @@ var example;
             enumerable: true,
             configurable: true
         });
+        /**
+         * Execute when a Destroy component is added
+         * @param entities
+         */
         DestroySystem.prototype.execute = function (entities) {
             for (var i = 0, l = entities.length; i < l; i++) {
                 this.pool.destroyEntity(entities[i]);
@@ -693,6 +716,9 @@ var example;
                 _this.mouseDown = false;
             };
         }
+        /**
+         * Mouse Polling
+         */
         InputSystem.prototype.execute = function () {
             this.pool.isAccelerating = this.mouseDown;
         };
@@ -717,6 +743,9 @@ var example;
     var MoveSystem = (function () {
         function MoveSystem() {
         }
+        /**
+         * Execute motion each frame
+         */
         MoveSystem.prototype.execute = function () {
             var entities = this.group.getEntities();
             for (var i = 0, l = entities.length; i < l; i++) {
@@ -747,6 +776,10 @@ var example;
             enumerable: true,
             configurable: true
         });
+        /**
+         * Check if anyone crossed the finish line
+         * @param entities
+         */
         ReachedFinishSystem.prototype.execute = function (entities) {
             var finishLinePosY = this.pool.finishLineEntity.position.y * 50;
             for (var i = 0, l = entities.length; i < l; i++) {
@@ -799,7 +832,6 @@ var example;
 //# sourceMappingURL=RenderPositionSystem.js.map
 var example;
 (function (example) {
-    var Sprite = PIXI.Sprite;
     var Texture = PIXI.Texture;
     var CoreMatcher = entitas.CoreMatcher;
     var AddViewSystem = (function () {
@@ -812,17 +844,14 @@ var example;
             enumerable: true,
             configurable: true
         });
+        /**
+         * Execute when a Resource is added
+         * @param entities
+         */
         AddViewSystem.prototype.execute = function (entities) {
             for (var i = 0, l = entities.length; i < l; i++) {
                 var e = entities[i];
-                var prefab = example.Constants.resources[e.resource.name];
-                var sprite = new Sprite(Texture.fromFrame(prefab.path));
-                if (prefab.scale) {
-                    sprite.scale.set(prefab.scale.x, prefab.scale.y);
-                }
-                if (prefab.rotation) {
-                    sprite.rotation = prefab.rotation.z;
-                }
+                var sprite = prefab(example.Constants.resources[e.resource.name]);
                 viewContainer.addChild(sprite);
                 e.addView(sprite);
             }
@@ -830,6 +859,44 @@ var example;
         return AddViewSystem;
     })();
     example.AddViewSystem = AddViewSystem;
+    /**
+     * Builds a prefab composite sprite
+     *
+     * @param config
+     * @returns {PIXI.Sprite}
+     */
+    function prefab(config) {
+        if (Array.isArray(config)) {
+            var container = new PIXI.Sprite();
+            for (var i = 0, l = config.length; i < l; i++) {
+                container.addChild(prefab(config[i]));
+            }
+            return container;
+        }
+        else {
+            var sprite = new PIXI.Sprite(Texture.fromFrame(config.path));
+            for (var k in config) {
+                switch (k) {
+                    case 'anchor':
+                        sprite.anchor.set(config.anchor.x, config.anchor.y);
+                        break;
+                    case 'scale':
+                        sprite.scale.set(config.scale.x, config.scale.y);
+                        break;
+                    case 'position':
+                        sprite.position.set(config.position.x, config.position.y);
+                        break;
+                    case 'rotation':
+                        sprite.rotation = config.rotation.z;
+                        break;
+                    case 'tint':
+                        sprite.tint = config.tint;
+                        break;
+                }
+            }
+            return sprite;
+        }
+    }
 })(example || (example = {}));
 //# sourceMappingURL=AddViewSystem.js.map
 var example;
@@ -849,6 +916,10 @@ var example;
             enumerable: true,
             configurable: true
         });
+        /**
+         * Execute when both Resource and Destroy are present
+         * @param entities
+         */
         RemoveViewSystem.prototype.execute = function (entities) {
             for (var i = 0, l = entities.length; i < l; i++) {
                 var e = entities[i];
@@ -878,11 +949,14 @@ var example;
     var CreateFinishLineSystem = (function () {
         function CreateFinishLineSystem() {
         }
+        /**
+         * Create the finish line
+         */
         CreateFinishLineSystem.prototype.initialize = function () {
             this.pool.createEntity()
                 .setFinishLine(true)
                 .addResource("Finish Line")
-                .addPosition(9, 7, 0);
+                .addPosition(20, 500, 0);
         };
         CreateFinishLineSystem.prototype.setPool = function (pool) {
             this.pool = pool;
@@ -897,6 +971,9 @@ var example;
     var CreateOpponentsSystem = (function () {
         function CreateOpponentsSystem() {
         }
+        /**
+         * Create an Enemy
+         */
         CreateOpponentsSystem.prototype.initialize = function () {
             var resourceName = "Opponent";
             for (var i = 1; i < 10; i++) {
@@ -920,6 +997,9 @@ var example;
     var CreatePlayerSystem = (function () {
         function CreatePlayerSystem() {
         }
+        /**
+         * Create the Player
+         */
         CreatePlayerSystem.prototype.initialize = function () {
             this.pool.createEntity()
                 .addResource("Player")
@@ -1023,7 +1103,7 @@ var example;
             stats.domElement.style.top = '0px';
             this.stage = new Container();
             viewContainer = this.sprites = new Container();
-            var renderer = this.renderer = PIXI.autoDetectRenderer(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT, { backgroundColor: 0x000000 });
+            var renderer = this.renderer = PIXI.autoDetectRenderer(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT, { backgroundColor: 0xffffff });
             switch (Constants.SCALE_TYPE) {
                 case example.ScaleType.FILL:
                     this.renderer.view.style.position = 'absolute';

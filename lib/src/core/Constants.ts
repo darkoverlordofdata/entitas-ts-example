@@ -53,7 +53,7 @@ module example {
           },
           position: {
             x: 500,
-            y: 0,
+            y: 0
           }
         }
       ],

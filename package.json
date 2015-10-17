@@ -4,12 +4,15 @@
   "description": "Entitas TS Example",
   "main": "index.js",
   "config": {
-    "build": []
+    "build": [
+      "cp -f web/index_build.html build/web/index.html",
+      "cp -fr web/res build/web"
+    ]
   },
   "scripts": {
     "_vscode_build": "tsc --watch",
     "android": "",
-    "build": "cat web/src/stats.js/stats.min.js LF web/src/pixi.js/pixi.min.js LF web/src/entitas/entitas.min.js LF web/src/speedracer/generatedComponents.js LF web/src/speedracer/generatedExtensions.js LF web/src/speedracer/core/Constants.js LF web/src/speedracer/systems/AccelerateSystem.js LF web/src/speedracer/systems/DestroySystem.js LF web/src/speedracer/systems/InputSystem.js LF web/src/speedracer/systems/MoveSystem.js LF web/src/speedracer/systems/ReachedFinishSystem.js LF web/src/speedracer/systems/RenderPositionSystem.js LF web/src/speedracer/systems/AddViewSystem.js LF web/src/speedracer/systems/RemoveViewSystem.js LF web/src/speedracer/systems/CreateFinishLineSystem.js LF web/src/speedracer/systems/CreateOpponentsSystem.js LF web/src/speedracer/systems/CreatePlayerSystem.js LF web/src/speedracer/core/GameController.js LF web/src/speedracer/core/Game.js LF web/main.js > build/speedracer.js  && cat web/src/stats.js/stats.min.js LF web/src/pixi.js/pixi.min.js LF web/src/entitas/entitas.min.js LF web/src/speedracer/generatedComponents.js LF web/src/speedracer/generatedExtensions.js LF web/src/speedracer/core/Constants.js LF web/src/speedracer/systems/AccelerateSystem.js LF web/src/speedracer/systems/DestroySystem.js LF web/src/speedracer/systems/InputSystem.js LF web/src/speedracer/systems/MoveSystem.js LF web/src/speedracer/systems/ReachedFinishSystem.js LF web/src/speedracer/systems/RenderPositionSystem.js LF web/src/speedracer/systems/AddViewSystem.js LF web/src/speedracer/systems/RemoveViewSystem.js LF web/src/speedracer/systems/CreateFinishLineSystem.js LF web/src/speedracer/systems/CreateOpponentsSystem.js LF web/src/speedracer/systems/CreatePlayerSystem.js LF web/src/speedracer/core/GameController.js LF web/src/speedracer/core/Game.js LF web/main.js | java -jar packages/closure-compiler/lib/vendor/compiler.jar --compilation_level ADVANCED_OPTIMIZATIONS --js_output_file build/speedracer.min.js",
+    "build": "cp -f web/index_build.html build/web/index.html && cp -fr web/res build/web && cat web/src/stats.js/stats.min.js LF web/src/pixi.js/pixi.min.js LF web/src/entitas/entitas.min.js LF web/src/speedracer/generatedComponents.js LF web/src/speedracer/generatedExtensions.js LF web/src/speedracer/core/Constants.js LF web/src/speedracer/systems/AccelerateSystem.js LF web/src/speedracer/systems/DestroySystem.js LF web/src/speedracer/systems/InputSystem.js LF web/src/speedracer/systems/MoveSystem.js LF web/src/speedracer/systems/ReachedFinishSystem.js LF web/src/speedracer/systems/RenderPositionSystem.js LF web/src/speedracer/systems/AddViewSystem.js LF web/src/speedracer/systems/RemoveViewSystem.js LF web/src/speedracer/systems/CreateFinishLineSystem.js LF web/src/speedracer/systems/CreateOpponentsSystem.js LF web/src/speedracer/systems/CreatePlayerSystem.js LF web/src/speedracer/core/GameController.js LF web/src/speedracer/core/Game.js LF web/main.js > build/speedracer.js  && cat web/src/stats.js/stats.min.js LF web/src/pixi.js/pixi.min.js LF web/src/entitas/entitas.min.js LF web/src/speedracer/generatedComponents.js LF web/src/speedracer/generatedExtensions.js LF web/src/speedracer/core/Constants.js LF web/src/speedracer/systems/AccelerateSystem.js LF web/src/speedracer/systems/DestroySystem.js LF web/src/speedracer/systems/InputSystem.js LF web/src/speedracer/systems/MoveSystem.js LF web/src/speedracer/systems/ReachedFinishSystem.js LF web/src/speedracer/systems/RenderPositionSystem.js LF web/src/speedracer/systems/AddViewSystem.js LF web/src/speedracer/systems/RemoveViewSystem.js LF web/src/speedracer/systems/CreateFinishLineSystem.js LF web/src/speedracer/systems/CreateOpponentsSystem.js LF web/src/speedracer/systems/CreatePlayerSystem.js LF web/src/speedracer/core/GameController.js LF web/src/speedracer/core/Game.js LF web/main.js | java -jar packages/closure-compiler/lib/vendor/compiler.jar --compilation_level WHITESPACE_ONLY --js_output_file build/speedracer.min.js",
     "clean": "rm -rf build/* && mkdir -p build && mkdir -p build/web && mkdir -p build/lib",
     "closure": "npm run transpile && tools/convert && java -jar tools/plovr.jar build config.js",
     "deploy": "cp -rf web/res ./web/frameworks/runtime-src/proj.android-studio/app/assets && cp -rf web/src ./web/frameworks/runtime-src/proj.android-studio/app/assets && cp -f web/main.js ./web/frameworks/runtime-src/proj.android-studio/app/assets && cp -f web/project.json ./web/frameworks/runtime-src/proj.android-studio/app/assets",
@@ -18,7 +21,7 @@
     "publish": "gulp publish",
     "jsdoc": "jsdoc goog/lib -r --template ../jaguarjs-jsdoc --configure ./conf.json --readme ./readme.md --destination ./build/web",
     "manifest": "gulp manifest",
-    "postbuild": "",
+    "postbuild": "cp -f build/speedracer.min.js build/web/speedracer.min.js",
     "postclosure": "cp -f web/asteroids.min.js build/web",
     "postinstall": "bower install && npm run get",
     "preandroid": "npm run predeploy && npm run transpile && npm run resources && cp -fr web/res ./web/frameworks/runtime-src/proj.android-studio/app/assets",
