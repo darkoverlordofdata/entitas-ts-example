@@ -5,7 +5,6 @@ module example {
   import Entity = entitas.Entity;
   import Matcher = entitas.Matcher;
   import Exception = entitas.Exception;
-  import CoreMatcher = entitas.CoreMatcher;
   import TriggerOnEvent = entitas.TriggerOnEvent;
   import IReactiveSystem = entitas.IReactiveSystem;
   import ISetPool = entitas.ISetPool;
@@ -14,7 +13,7 @@ module example {
     protected pool:Pool;
 
     public get trigger():TriggerOnEvent {
-      return CoreMatcher.Position.onEntityAdded();
+      return Matcher.Position.onEntityAdded();
     }
 
     /**
@@ -22,7 +21,7 @@ module example {
      * @param entities
      */
     public execute(entities:Array<Entity>) {
-      var finishLinePosY = this.pool.finishLineEntity.position.y*50;
+      var finishLinePosY = this.pool.finishLineEntity.position.y;
       for (var i=0, l=entities.length; i<l; i++) {
         var e = entities[i];
         if (e.position.y > finishLinePosY) {

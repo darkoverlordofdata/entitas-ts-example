@@ -5,7 +5,6 @@ module example {
   import Entity = entitas.Entity;
   import Matcher = entitas.Matcher;
   import Exception = entitas.Exception;
-  import CoreMatcher = entitas.CoreMatcher;
   import TriggerOnEvent = entitas.TriggerOnEvent;
   import IReactiveSystem = entitas.IReactiveSystem;
   import ISetPool = entitas.ISetPool;
@@ -14,7 +13,7 @@ module example {
     protected group:Group;
 
     public get trigger():TriggerOnEvent {
-      return CoreMatcher.Accelerating.onEntityAddedOrRemoved();
+      return Matcher.Accelerating.onEntityAddedOrRemoved();
     }
 
     /**
@@ -36,7 +35,7 @@ module example {
     }
     
     public setPool(pool:Pool) {
-      this.group = pool.getGroup(Matcher.allOf(CoreMatcher.Acceleratable, CoreMatcher.Move));
+      this.group = pool.getGroup(Matcher.allOf(Matcher.Acceleratable, Matcher.Move));
     }
     
 

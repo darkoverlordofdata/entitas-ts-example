@@ -5,16 +5,15 @@ module example {
   import Entity = entitas.Entity;
   import Matcher = entitas.Matcher;
   import Exception = entitas.Exception;
-  import CoreMatcher = entitas.CoreMatcher;
   import TriggerOnEvent = entitas.TriggerOnEvent;
   import IReactiveSystem = entitas.IReactiveSystem;
   import ISetPool = entitas.ISetPool;
-
+0
   export class DestroySystem implements IReactiveSystem, ISetPool {
     protected pool:Pool;
 
     public get trigger():TriggerOnEvent {
-      return CoreMatcher.Destroy.onEntityAdded();
+      return Matcher.Destroy.onEntityAdded();
     }
 
     /**

@@ -5,7 +5,6 @@ module example {
   import Entity = entitas.Entity;
   import Matcher = entitas.Matcher;
   import Exception = entitas.Exception;
-  import CoreMatcher = entitas.CoreMatcher;
   import TriggerOnEvent = entitas.TriggerOnEvent;
   import IExecuteSystem = entitas.IExecuteSystem;
   import IInitializeSystem = entitas.IInitializeSystem;

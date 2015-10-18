@@ -5,7 +5,6 @@ module example {
   import Entity = entitas.Entity;
   import Matcher = entitas.Matcher;
   import Exception = entitas.Exception;
-  import CoreMatcher = entitas.CoreMatcher;
   import TriggerOnEvent = entitas.TriggerOnEvent;
   import IExecuteSystem = entitas.IExecuteSystem;
   import ISetPool = entitas.ISetPool;
@@ -27,7 +26,7 @@ module example {
     }
     
     public setPool(pool:Pool) {
-      this.group = pool.getGroup(Matcher.allOf(CoreMatcher.Move, CoreMatcher.Position));
+      this.group = pool.getGroup(Matcher.allOf(Matcher.Move, Matcher.Position));
     }
     
 

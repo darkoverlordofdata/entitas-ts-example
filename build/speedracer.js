@@ -24,17 +24,17 @@ _super);function EntityIsNotDestroyedException(message){_super.call(this,message
 (entitas={}));var entitas;
 (function(entitas){var Signal=function(){function Signal(context,alloc){if(alloc===void 0)alloc=16;this._listeners=[];this._context=context;this._alloc=alloc;this._size=0}Signal.prototype.dispatch=function(){var args=[];for(var _i=0;_i<arguments.length;_i++)args[_i-0]=arguments[_i];var listeners=this._listeners;var size=listeners.length;var context=this._context;for(var i=0;i<size;i++)listeners[i].apply(context,args)};Signal.prototype.add=function(listener){this._listeners.push(listener)};Signal.prototype.remove=
 function(listener){var listeners=this._listeners;var index=listeners.indexOf(listener);if(index!==-1)listeners.splice(index,1)};Signal.prototype.clear=function(){this._listeners.length=0};return Signal}();entitas.Signal=Signal})(entitas||(entitas={}));var entitas;
-(function(entitas){var MatcherException=entitas.MatcherException;var CoreMatcher=function(){function CoreMatcher(){}return CoreMatcher}();entitas.CoreMatcher=CoreMatcher;var Matcher=function(){function Matcher(){this._id=Matcher.uniqueId++}Object.defineProperty(Matcher.prototype,"id",{get:function(){return this._id},enumerable:true,configurable:true});Object.defineProperty(Matcher.prototype,"indices",{get:function(){if(!this._indices)this._indices=this.mergeIndices();return this._indices},enumerable:true,
-configurable:true});Object.defineProperty(Matcher.prototype,"allOfIndices",{get:function(){return this._allOfIndices},enumerable:true,configurable:true});Object.defineProperty(Matcher.prototype,"anyOfIndices",{get:function(){return this._anyOfIndices},enumerable:true,configurable:true});Object.defineProperty(Matcher.prototype,"noneOfIndices",{get:function(){return this._noneOfIndices},enumerable:true,configurable:true});Matcher.prototype.anyOf=function(){var args=[];for(var _i=0;_i<arguments.length;_i++)args[_i-
-0]=arguments[_i];if("number"===typeof args[0]||"string"===typeof args[0]){this._anyOfIndices=Matcher.distinctIndices(args);this._indices=undefined;return this}else return this.anyOf.apply(this,Matcher.mergeIndices(args))};Matcher.prototype.noneOf=function(){var args=[];for(var _i=0;_i<arguments.length;_i++)args[_i-0]=arguments[_i];if("number"===typeof args[0]||"string"===typeof args[0]){this._noneOfIndices=Matcher.distinctIndices(args);this._indices=undefined;return this}else return this.noneOf.apply(this,
-Matcher.mergeIndices(args))};Matcher.prototype.matches=function(entity){var matchesAllOf=this._allOfIndices===undefined||entity.hasComponents(this._allOfIndices);var matchesAnyOf=this._anyOfIndices===undefined||entity.hasAnyComponent(this._anyOfIndices);var matchesNoneOf=this._noneOfIndices===undefined||!entity.hasAnyComponent(this._noneOfIndices);return matchesAllOf&&matchesAnyOf&&matchesNoneOf};Matcher.prototype.mergeIndices=function(){var indicesList=[];if(this._allOfIndices!==undefined)indicesList=
-indicesList.concat(this._allOfIndices);if(this._anyOfIndices!==undefined)indicesList=indicesList.concat(this._anyOfIndices);if(this._noneOfIndices!==undefined)indicesList=indicesList.concat(this._noneOfIndices);return Matcher.distinctIndices(indicesList)};Matcher.prototype.toString=function(){if(this._toStringCache===undefined){var sb=[];if(this._allOfIndices!==undefined)Matcher.appendIndices(sb,"AllOf",this._allOfIndices);if(this._anyOfIndices!==undefined){if(this._allOfIndices!==undefined)sb.push(".");
-Matcher.appendIndices(sb,"AnyOf",this._anyOfIndices)}if(this._noneOfIndices!==undefined)Matcher.appendIndices(sb,".NoneOf",this._noneOfIndices);this._toStringCache=sb.join("")}return this._toStringCache};Matcher.prototype.equals=function(obj){if(obj==null||obj===undefined)return false;var matcher=obj;if(!Matcher.equalIndices(matcher.allOfIndices,this._allOfIndices))return false;if(!Matcher.equalIndices(matcher.anyOfIndices,this._anyOfIndices))return false;if(!Matcher.equalIndices(matcher.noneOfIndices,
-this._noneOfIndices))return false;return true};Matcher.equalIndices=function(i1,i2){if(i1===undefined!=(i2===undefined))return false;if(i1===undefined)return true;if(i1.length!==i2.length)return false;for(var i=0,indicesLength=i1.length;i<indicesLength;i++)if(i1[i]!=i2[i])return false;return true};Matcher.distinctIndices=function(indices){var indicesSet={};for(var i=0,l=indices.length;i<l;i++){var k=""+indices[i];indicesSet[k]=i}return[].concat(Object.keys(indicesSet))};Matcher.mergeIndices=function(matchers){var indices=
-[];for(var i=0,matchersLength=matchers.length;i<matchersLength;i++){var matcher=matchers[i];if(matcher.indices.length!==1)throw new MatcherException(matcher);indices[i]=matcher.indices[0]}return indices};Matcher.allOf=function(){var args=[];for(var _i=0;_i<arguments.length;_i++)args[_i-0]=arguments[_i];if("number"===typeof args[0]||"string"===typeof args[0]){var matcher=new Matcher;matcher._allOfIndices=Matcher.distinctIndices(args);return matcher}else return Matcher.allOf.apply(this,Matcher.mergeIndices(args))};
-Matcher.anyOf=function(){var args=[];for(var _i=0;_i<arguments.length;_i++)args[_i-0]=arguments[_i];if("number"===typeof args[0]||"string"===typeof args[0]){var matcher=new Matcher;matcher._anyOfIndices=Matcher.distinctIndices(args);return matcher}else return Matcher.anyOf.apply(this,Matcher.mergeIndices(args))};Matcher.appendIndices=function(sb,prefix,indexArray){var SEPERATOR=", ";sb.push(prefix);sb.push("(");var lastSeperator=indexArray.length-1;for(var i=0,indicesLength=indexArray.length;i<indicesLength;i++){sb.push(""+
-indexArray[i]);if(i<lastSeperator)sb.push(SEPERATOR)}sb.push(")")};Matcher.prototype.onEntityAdded=function(){return new entitas.TriggerOnEvent(this,entitas.GroupEventType.OnEntityAdded)};Matcher.prototype.onEntityRemoved=function(){return new entitas.TriggerOnEvent(this,entitas.GroupEventType.OnEntityRemoved)};Matcher.prototype.onEntityAddedOrRemoved=function(){return new entitas.TriggerOnEvent(this,entitas.GroupEventType.OnEntityAddedOrRemoved)};Matcher.uniqueId=0;return Matcher}();entitas.Matcher=
-Matcher})(entitas||(entitas={}));var entitas;(function(entitas){var TriggerOnEvent=function(){function TriggerOnEvent(trigger,eventType){this.trigger=trigger;this.eventType=eventType}return TriggerOnEvent}();entitas.TriggerOnEvent=TriggerOnEvent})(entitas||(entitas={}));var entitas;
+(function(entitas){var MatcherException=entitas.MatcherException;var Matcher=function(){function Matcher(){this._id=Matcher.uniqueId++}Object.defineProperty(Matcher.prototype,"id",{get:function(){return this._id},enumerable:true,configurable:true});Object.defineProperty(Matcher.prototype,"indices",{get:function(){if(!this._indices)this._indices=this.mergeIndices();return this._indices},enumerable:true,configurable:true});Object.defineProperty(Matcher.prototype,"allOfIndices",{get:function(){return this._allOfIndices},
+enumerable:true,configurable:true});Object.defineProperty(Matcher.prototype,"anyOfIndices",{get:function(){return this._anyOfIndices},enumerable:true,configurable:true});Object.defineProperty(Matcher.prototype,"noneOfIndices",{get:function(){return this._noneOfIndices},enumerable:true,configurable:true});Matcher.prototype.anyOf=function(){var args=[];for(var _i=0;_i<arguments.length;_i++)args[_i-0]=arguments[_i];if("number"===typeof args[0]||"string"===typeof args[0]){this._anyOfIndices=Matcher.distinctIndices(args);
+this._indices=undefined;return this}else return this.anyOf.apply(this,Matcher.mergeIndices(args))};Matcher.prototype.noneOf=function(){var args=[];for(var _i=0;_i<arguments.length;_i++)args[_i-0]=arguments[_i];if("number"===typeof args[0]||"string"===typeof args[0]){this._noneOfIndices=Matcher.distinctIndices(args);this._indices=undefined;return this}else return this.noneOf.apply(this,Matcher.mergeIndices(args))};Matcher.prototype.matches=function(entity){var matchesAllOf=this._allOfIndices===undefined||
+entity.hasComponents(this._allOfIndices);var matchesAnyOf=this._anyOfIndices===undefined||entity.hasAnyComponent(this._anyOfIndices);var matchesNoneOf=this._noneOfIndices===undefined||!entity.hasAnyComponent(this._noneOfIndices);return matchesAllOf&&matchesAnyOf&&matchesNoneOf};Matcher.prototype.mergeIndices=function(){var indicesList=[];if(this._allOfIndices!==undefined)indicesList=indicesList.concat(this._allOfIndices);if(this._anyOfIndices!==undefined)indicesList=indicesList.concat(this._anyOfIndices);
+if(this._noneOfIndices!==undefined)indicesList=indicesList.concat(this._noneOfIndices);return Matcher.distinctIndices(indicesList)};Matcher.prototype.toString=function(){if(this._toStringCache===undefined){var sb=[];if(this._allOfIndices!==undefined)Matcher.appendIndices(sb,"AllOf",this._allOfIndices);if(this._anyOfIndices!==undefined){if(this._allOfIndices!==undefined)sb.push(".");Matcher.appendIndices(sb,"AnyOf",this._anyOfIndices)}if(this._noneOfIndices!==undefined)Matcher.appendIndices(sb,".NoneOf",
+this._noneOfIndices);this._toStringCache=sb.join("")}return this._toStringCache};Matcher.prototype.equals=function(obj){if(obj==null||obj===undefined)return false;var matcher=obj;if(!Matcher.equalIndices(matcher.allOfIndices,this._allOfIndices))return false;if(!Matcher.equalIndices(matcher.anyOfIndices,this._anyOfIndices))return false;if(!Matcher.equalIndices(matcher.noneOfIndices,this._noneOfIndices))return false;return true};Matcher.equalIndices=function(i1,i2){if(i1===undefined!=(i2===undefined))return false;
+if(i1===undefined)return true;if(i1.length!==i2.length)return false;for(var i=0,indicesLength=i1.length;i<indicesLength;i++)if(i1[i]!=i2[i])return false;return true};Matcher.distinctIndices=function(indices){var indicesSet={};for(var i=0,l=indices.length;i<l;i++){var k=""+indices[i];indicesSet[k]=i}return[].concat(Object.keys(indicesSet))};Matcher.mergeIndices=function(matchers){var indices=[];for(var i=0,matchersLength=matchers.length;i<matchersLength;i++){var matcher=matchers[i];if(matcher.indices.length!==
+1)throw new MatcherException(matcher);indices[i]=matcher.indices[0]}return indices};Matcher.allOf=function(){var args=[];for(var _i=0;_i<arguments.length;_i++)args[_i-0]=arguments[_i];if("number"===typeof args[0]||"string"===typeof args[0]){var matcher=new Matcher;matcher._allOfIndices=Matcher.distinctIndices(args);return matcher}else return Matcher.allOf.apply(this,Matcher.mergeIndices(args))};Matcher.anyOf=function(){var args=[];for(var _i=0;_i<arguments.length;_i++)args[_i-0]=arguments[_i];if("number"===
+typeof args[0]||"string"===typeof args[0]){var matcher=new Matcher;matcher._anyOfIndices=Matcher.distinctIndices(args);return matcher}else return Matcher.anyOf.apply(this,Matcher.mergeIndices(args))};Matcher.appendIndices=function(sb,prefix,indexArray){var SEPERATOR=", ";sb.push(prefix);sb.push("(");var lastSeperator=indexArray.length-1;for(var i=0,indicesLength=indexArray.length;i<indicesLength;i++){sb.push(""+indexArray[i]);if(i<lastSeperator)sb.push(SEPERATOR)}sb.push(")")};Matcher.prototype.onEntityAdded=
+function(){return new entitas.TriggerOnEvent(this,entitas.GroupEventType.OnEntityAdded)};Matcher.prototype.onEntityRemoved=function(){return new entitas.TriggerOnEvent(this,entitas.GroupEventType.OnEntityRemoved)};Matcher.prototype.onEntityAddedOrRemoved=function(){return new entitas.TriggerOnEvent(this,entitas.GroupEventType.OnEntityAddedOrRemoved)};Matcher.uniqueId=0;return Matcher}();entitas.Matcher=Matcher})(entitas||(entitas={}));var entitas;
+(function(entitas){var TriggerOnEvent=function(){function TriggerOnEvent(trigger,eventType){this.trigger=trigger;this.eventType=eventType}return TriggerOnEvent}();entitas.TriggerOnEvent=TriggerOnEvent})(entitas||(entitas={}));var entitas;
 (function(entitas){var Signal=entitas.Signal;var EntityIsNotEnabledException=entitas.EntityIsNotEnabledException;var EntityIsAlreadyReleasedException=entitas.EntityIsAlreadyReleasedException;var EntityAlreadyHasComponentException=entitas.EntityAlreadyHasComponentException;var EntityDoesNotHaveComponentException=entitas.EntityDoesNotHaveComponentException;var Entity=function(){function Entity(totalComponents){if(totalComponents===void 0)totalComponents=16;this._creationIndex=0;this._isEnabled=true;
 this._refCount=0;this.onEntityReleased=new Signal(this);this.onComponentAdded=new Signal(this);this.onComponentRemoved=new Signal(this);this.onComponentReplaced=new Signal(this);this._components=new Array(totalComponents)}Object.defineProperty(Entity.prototype,"creationIndex",{get:function(){return this._creationIndex},enumerable:true,configurable:true});Entity.prototype.addComponent=function(index,component){if(!this._isEnabled)throw new EntityIsNotEnabledException("Cannot add component!");if(this.hasComponent(index)){var errorMsg=
 "Cannot add component at index "+index+" to "+this;throw new EntityAlreadyHasComponentException(errorMsg,index);}this._components[index]=component;this._componentsCache=undefined;this._componentIndicesCache=undefined;this._toStringCache=undefined;this.onComponentAdded.dispatch(this,index,component);return this};Entity.prototype.removeComponent=function(index){if(!this._isEnabled)throw new EntityIsNotEnabledException("Cannot remove component!");if(!this.hasComponent(index)){var errorMsg="Cannot remove component at index "+
@@ -184,7 +184,7 @@ var example;
   var Pool = entitas.Pool;
   var Matcher = entitas.Matcher;
   var Entity = entitas.Entity;
-  var CoreMatcher = entitas.CoreMatcher;
+  var Matcher = entitas.Matcher;
   var AcceleratableComponent = example.AcceleratableComponent;
   var AcceleratingComponent = example.AcceleratingComponent;
   var DestroyComponent = example.DestroyComponent;
@@ -416,97 +416,97 @@ var example;
     Entity._viewComponentPool.push(component);
     return this;
   };
-  CoreMatcher._matcherAcceleratable=null;
+  Matcher._matcherAcceleratable=null;
   
-  Object.defineProperty(CoreMatcher, 'Acceleratable', {
+  Object.defineProperty(Matcher, 'Acceleratable', {
     get: function() {
-      if (CoreMatcher._matcherAcceleratable == null) {
-        CoreMatcher._matcherAcceleratable = Matcher.allOf(CoreComponentIds.Acceleratable);
+      if (Matcher._matcherAcceleratable == null) {
+        Matcher._matcherAcceleratable = Matcher.allOf(CoreComponentIds.Acceleratable);
       }
       
-      return CoreMatcher._matcherAcceleratable;
+      return Matcher._matcherAcceleratable;
     }
   });
-  CoreMatcher._matcherAccelerating=null;
+  Matcher._matcherAccelerating=null;
   
-  Object.defineProperty(CoreMatcher, 'Accelerating', {
+  Object.defineProperty(Matcher, 'Accelerating', {
     get: function() {
-      if (CoreMatcher._matcherAccelerating == null) {
-        CoreMatcher._matcherAccelerating = Matcher.allOf(CoreComponentIds.Accelerating);
+      if (Matcher._matcherAccelerating == null) {
+        Matcher._matcherAccelerating = Matcher.allOf(CoreComponentIds.Accelerating);
       }
       
-      return CoreMatcher._matcherAccelerating;
+      return Matcher._matcherAccelerating;
     }
   });
-  CoreMatcher._matcherDestroy=null;
+  Matcher._matcherDestroy=null;
   
-  Object.defineProperty(CoreMatcher, 'Destroy', {
+  Object.defineProperty(Matcher, 'Destroy', {
     get: function() {
-      if (CoreMatcher._matcherDestroy == null) {
-        CoreMatcher._matcherDestroy = Matcher.allOf(CoreComponentIds.Destroy);
+      if (Matcher._matcherDestroy == null) {
+        Matcher._matcherDestroy = Matcher.allOf(CoreComponentIds.Destroy);
       }
       
-      return CoreMatcher._matcherDestroy;
+      return Matcher._matcherDestroy;
     }
   });
-  CoreMatcher._matcherMove=null;
+  Matcher._matcherMove=null;
   
-  Object.defineProperty(CoreMatcher, 'Move', {
+  Object.defineProperty(Matcher, 'Move', {
     get: function() {
-      if (CoreMatcher._matcherMove == null) {
-        CoreMatcher._matcherMove = Matcher.allOf(CoreComponentIds.Move);
+      if (Matcher._matcherMove == null) {
+        Matcher._matcherMove = Matcher.allOf(CoreComponentIds.Move);
       }
       
-      return CoreMatcher._matcherMove;
+      return Matcher._matcherMove;
     }
   });
-  CoreMatcher._matcherPosition=null;
+  Matcher._matcherPosition=null;
   
-  Object.defineProperty(CoreMatcher, 'Position', {
+  Object.defineProperty(Matcher, 'Position', {
     get: function() {
-      if (CoreMatcher._matcherPosition == null) {
-        CoreMatcher._matcherPosition = Matcher.allOf(CoreComponentIds.Position);
+      if (Matcher._matcherPosition == null) {
+        Matcher._matcherPosition = Matcher.allOf(CoreComponentIds.Position);
       }
       
-      return CoreMatcher._matcherPosition;
+      return Matcher._matcherPosition;
     }
   });
-  CoreMatcher._matcherFinishLine=null;
+  Matcher._matcherFinishLine=null;
   
-  Object.defineProperty(CoreMatcher, 'FinishLine', {
+  Object.defineProperty(Matcher, 'FinishLine', {
     get: function() {
-      if (CoreMatcher._matcherFinishLine == null) {
-        CoreMatcher._matcherFinishLine = Matcher.allOf(CoreComponentIds.FinishLine);
+      if (Matcher._matcherFinishLine == null) {
+        Matcher._matcherFinishLine = Matcher.allOf(CoreComponentIds.FinishLine);
       }
       
-      return CoreMatcher._matcherFinishLine;
+      return Matcher._matcherFinishLine;
     }
   });
-  CoreMatcher._matcherResource=null;
+  Matcher._matcherResource=null;
   
-  Object.defineProperty(CoreMatcher, 'Resource', {
+  Object.defineProperty(Matcher, 'Resource', {
     get: function() {
-      if (CoreMatcher._matcherResource == null) {
-        CoreMatcher._matcherResource = Matcher.allOf(CoreComponentIds.Resource);
+      if (Matcher._matcherResource == null) {
+        Matcher._matcherResource = Matcher.allOf(CoreComponentIds.Resource);
       }
       
-      return CoreMatcher._matcherResource;
+      return Matcher._matcherResource;
     }
   });
-  CoreMatcher._matcherView=null;
+  Matcher._matcherView=null;
   
-  Object.defineProperty(CoreMatcher, 'View', {
+  Object.defineProperty(Matcher, 'View', {
     get: function() {
-      if (CoreMatcher._matcherView == null) {
-        CoreMatcher._matcherView = Matcher.allOf(CoreComponentIds.View);
+      if (Matcher._matcherView == null) {
+        Matcher._matcherView = Matcher.allOf(CoreComponentIds.View);
       }
       
-      return CoreMatcher._matcherView;
+      return Matcher._matcherView;
     }
   });
   Object.defineProperty(Pool.prototype, 'acceleratingEntity', {
     get: function() {
-      return this.getGroup(CoreMatcher.Accelerating).getSingleEntity();
+      return this.getGroup(Matcher.Accelerating).getSingleEntity();
     }
   });
   Object.defineProperty(Pool.prototype, 'isAccelerating', {
@@ -526,7 +526,7 @@ var example;
   });
   Object.defineProperty(Pool.prototype, 'finishLineEntity', {
     get: function() {
-      return this.getGroup(CoreMatcher.FinishLine).getSingleEntity();
+      return this.getGroup(Matcher.FinishLine).getSingleEntity();
     }
   });
   Object.defineProperty(Pool.prototype, 'isFinishLine', {
@@ -636,13 +636,12 @@ var example;
 (function (example) {
     var Matcher = entitas.Matcher;
     var Exception = entitas.Exception;
-    var CoreMatcher = entitas.CoreMatcher;
     var AccelerateSystem = (function () {
         function AccelerateSystem() {
         }
         Object.defineProperty(AccelerateSystem.prototype, "trigger", {
             get: function () {
-                return CoreMatcher.Accelerating.onEntityAddedOrRemoved();
+                return Matcher.Accelerating.onEntityAddedOrRemoved();
             },
             enumerable: true,
             configurable: true
@@ -665,7 +664,7 @@ var example;
             }
         };
         AccelerateSystem.prototype.setPool = function (pool) {
-            this.group = pool.getGroup(Matcher.allOf(CoreMatcher.Acceleratable, CoreMatcher.Move));
+            this.group = pool.getGroup(Matcher.allOf(Matcher.Acceleratable, Matcher.Move));
         };
         return AccelerateSystem;
     })();
@@ -674,13 +673,14 @@ var example;
 //# sourceMappingURL=AccelerateSystem.js.map
 var example;
 (function (example) {
-    var CoreMatcher = entitas.CoreMatcher;
+    var Matcher = entitas.Matcher;
+    0;
     var DestroySystem = (function () {
         function DestroySystem() {
         }
         Object.defineProperty(DestroySystem.prototype, "trigger", {
             get: function () {
-                return CoreMatcher.Destroy.onEntityAdded();
+                return Matcher.Destroy.onEntityAdded();
             },
             enumerable: true,
             configurable: true
@@ -739,7 +739,6 @@ var example;
 var example;
 (function (example) {
     var Matcher = entitas.Matcher;
-    var CoreMatcher = entitas.CoreMatcher;
     var MoveSystem = (function () {
         function MoveSystem() {
         }
@@ -756,7 +755,7 @@ var example;
             }
         };
         MoveSystem.prototype.setPool = function (pool) {
-            this.group = pool.getGroup(Matcher.allOf(CoreMatcher.Move, CoreMatcher.Position));
+            this.group = pool.getGroup(Matcher.allOf(Matcher.Move, Matcher.Position));
         };
         return MoveSystem;
     })();
@@ -765,13 +764,13 @@ var example;
 //# sourceMappingURL=MoveSystem.js.map
 var example;
 (function (example) {
-    var CoreMatcher = entitas.CoreMatcher;
+    var Matcher = entitas.Matcher;
     var ReachedFinishSystem = (function () {
         function ReachedFinishSystem() {
         }
         Object.defineProperty(ReachedFinishSystem.prototype, "trigger", {
             get: function () {
-                return CoreMatcher.Position.onEntityAdded();
+                return Matcher.Position.onEntityAdded();
             },
             enumerable: true,
             configurable: true
@@ -800,13 +799,12 @@ var example;
 var example;
 (function (example) {
     var Matcher = entitas.Matcher;
-    var CoreMatcher = entitas.CoreMatcher;
     var RenderPositionSystem = (function () {
         function RenderPositionSystem() {
         }
         Object.defineProperty(RenderPositionSystem.prototype, "trigger", {
             get: function () {
-                return Matcher.allOf(CoreMatcher.View, CoreMatcher.Position).onEntityAdded();
+                return Matcher.allOf(Matcher.View, Matcher.Position).onEntityAdded();
             },
             enumerable: true,
             configurable: true
@@ -820,7 +818,7 @@ var example;
         };
         Object.defineProperty(RenderPositionSystem.prototype, "ensureComponents", {
             get: function () {
-                return CoreMatcher.View;
+                return Matcher.View;
             },
             enumerable: true,
             configurable: true
@@ -833,13 +831,13 @@ var example;
 var example;
 (function (example) {
     var Texture = PIXI.Texture;
-    var CoreMatcher = entitas.CoreMatcher;
+    var Matcher = entitas.Matcher;
     var AddViewSystem = (function () {
         function AddViewSystem() {
         }
         Object.defineProperty(AddViewSystem.prototype, "trigger", {
             get: function () {
-                return CoreMatcher.Resource.onEntityAdded();
+                return Matcher.Resource.onEntityAdded();
             },
             enumerable: true,
             configurable: true
@@ -902,15 +900,14 @@ var example;
 var example;
 (function (example) {
     var Matcher = entitas.Matcher;
-    var CoreMatcher = entitas.CoreMatcher;
     var RemoveViewSystem = (function () {
         function RemoveViewSystem() {
         }
         Object.defineProperty(RemoveViewSystem.prototype, "triggers", {
             get: function () {
                 return [
-                    CoreMatcher.Resource.onEntityRemoved(),
-                    Matcher.allOf(CoreMatcher.Resource, CoreMatcher.Destroy).onEntityAdded()
+                    Matcher.Resource.onEntityRemoved(),
+                    Matcher.allOf(Matcher.Resource, Matcher.Destroy).onEntityAdded()
                 ];
             },
             enumerable: true,
@@ -928,13 +925,13 @@ var example;
         };
         Object.defineProperty(RemoveViewSystem.prototype, "ensureComponents", {
             get: function () {
-                return CoreMatcher.View;
+                return Matcher.View;
             },
             enumerable: true,
             configurable: true
         });
         RemoveViewSystem.prototype.setPool = function (pool) {
-            pool.getGroup(CoreMatcher.View).onEntityRemoved.add(this.onEntityRemoved);
+            pool.getGroup(Matcher.View).onEntityRemoved.add(this.onEntityRemoved);
         };
         RemoveViewSystem.prototype.onEntityRemoved = function (group, entity, index, component) {
             viewContainer.removeChild(component.sprite);

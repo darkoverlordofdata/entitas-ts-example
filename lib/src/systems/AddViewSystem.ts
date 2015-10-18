@@ -9,14 +9,13 @@ module example {
   import Entity = entitas.Entity;
   import Matcher = entitas.Matcher;
   import Exception = entitas.Exception;
-  import CoreMatcher = entitas.CoreMatcher;
   import TriggerOnEvent = entitas.TriggerOnEvent;
   import IReactiveSystem = entitas.IReactiveSystem;
 
   export class AddViewSystem implements IReactiveSystem {
 
     public get trigger():TriggerOnEvent {
-      return CoreMatcher.Resource.onEntityAdded();
+      return Matcher.Resource.onEntityAdded();
     }
 
     /**
